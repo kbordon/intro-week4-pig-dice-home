@@ -5,23 +5,37 @@ function Player(name) {
   this.turnScore = 0;
 }
 
-// Player.prototype.rollDie = function() {
-//   var rollResult = Math.floor(Math.random() * (6-1 + 1)) + 1;
-//   if (rollResult === 1) {
-//     this.turnScore = 0;
-//   } else {
-//     this.turnScore = this.turnScore + rollResult;
-//     if (this.totalScore + this.turnScore >= 100) {
-//       this.totalScore = this.totalScore + this.turnScore;
-//       return "win";
-//     }
-//     return rollResult;
-//
-//   }
-// }
+Player.protoype.rollDice = function(number) {
+  var diceQuantity = [];
+  for (var diceIndex = 0; diceIndex < number; diceIndex++) {
+    diceQuantity.push(Math.floor(Math.random() * (6-1 + 1)) + 1);
+  }
+  if (diceQuantity[0] === 1) {
+    if (diceQuantity[1] === 1) {
+      this.turnScore = 0;
+      this.totalScore = 0;
+      return "Z";
+    } else {
+      this.turnScore = 0;
+      return 0;
+    }
+  } else {
+    diceQuantity.forEach(function(rolledNumber){
+      this.turnScore += rolledNumber;
+    });
+    this.turnScore = this.turnScore + diceQuantity[0];
+    if (diceQuantity[1]) {
+      this.turnScore += diceQuantity[1];
+    }
+    if (this.totalScore + this.turnScore >= 100) {
+      this.totalScore = this.totalScore + this.turnScore;
+      return "A";
+    }
+    return diceQuantity;
+  }
+}
 
 Player.prototype.rollTwoDice = function() {
-  debugger;
   var rollArray = [];
   for (var diceNumber = 0; diceNumber < 2; diceNumber++) {
     rollArray.push(Math.floor(Math.random() * (6-1 + 1)) + 1);
@@ -41,17 +55,6 @@ Player.prototype.rollTwoDice = function() {
       }
     return rollArray;
   }
-  // if (rollResult === 1) {
-  //   this.turnScore = 0;
-  // } else {
-  //   this.turnScore = this.turnScore + rollResult;
-  //   if (this.totalScore + this.turnScore >= 100) {
-  //     this.totalScore = this.totalScore + this.turnScore;
-  //     return "win";
-  //   }
-  //   return rollResult;
-  //
-  // }
 }
 
 Player.prototype.holdDie = function() {
@@ -60,8 +63,6 @@ Player.prototype.holdDie = function() {
 }
 
 // front-end
-
-
 $(document).ready(function(){
   $("#player-form").submit(function(event) {
     event.preventDefault();
@@ -69,9 +70,6 @@ $(document).ready(function(){
     var oneSound = new Audio('one.mp3');
     var snakeEyes = new Audio('snakeeyes.mp3');
     luckyHarry.play();
-
-    // var nameInput = $("#player-one").val();
-    // var newPlayer = new Player(nameInput);
 
     $("#create-players").hide();
     $(".game-box").show();
@@ -83,7 +81,7 @@ $(document).ready(function(){
       playerArray.push(newPlayer);
     })
 
-    for ( var playersIndex = 0; playersIndex < playerArray.length; playersIndex++) {
+    for (var playersIndex = 0; playersIndex < playerArray.length; playersIndex++) {
       $("#score-keeper").append("<li class='player-" + playersIndex + "'>" + playerArray[playersIndex].playerName + "<br><span class='total-" + playersIndex + "'>" + 0 + "</span></li>");
     }
 
@@ -128,29 +126,6 @@ $(document).ready(function(){
           $("#score-total").append("<br>Doubles <em>must</em> roll again!");
         }
       }
-
-
-          // $("#score-total").text(playerArray[currentPlayerIndex].playerName + " text ");
-      // if (dieResult === "win") {
-      //   $("#button-play, #button-hold").attr("disabled", "disabled");
-      //   $("#score-total").text(playerArray[currentPlayerIndex].playerName + " WINS! Your Score is " + playerArray[currentPlayerIndex].totalScore + "!");
-      // } else if (dieResult) {
-      //   $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a " + dieResult  + ". Turn Score: " + playerArray[currentPlayerIndex].turnScore);
-      //   // $("button#button-hold").show();
-      // } else {
-      //   $("#button-hold").attr("disabled", "disabled");
-      //   $(".player-" + currentPlayerIndex).removeClass("score-current");
-      //   $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a 1, and lost their turn!")
-      //   pigSound.play();
-      //   if ((playerArray.length - 1) === currentPlayerIndex) {
-      //     currentPlayerIndex = 0;
-      //   } else {
-      //     currentPlayerIndex++;
-      //   }
-      //   $(".player-" + currentPlayerIndex).addClass("score-current");
-      //   $("#score-total").append(" It's <strong>" + playerArray[currentPlayerIndex].playerName + "'s</strong> turn.");
-      // }
-
     });
 
     $("button#button-hold").click(function () {
@@ -171,8 +146,5 @@ $(document).ready(function(){
     $("button#button-reset").click(function() {
       window.location.reload();
     });
-
-  })
-
-
+  });
 });
