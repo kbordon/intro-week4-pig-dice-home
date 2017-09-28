@@ -34,6 +34,7 @@
 }
 
 .jumbotron {
+  margin-top: 20px;
   background-color: pink;
   background-image: url("../img/pigcute.jpg");
   opacity: .90;

@@ -60,13 +60,19 @@ Player.prototype.holdDie = function() {
 }
 
 // front-end
+
+
 $(document).ready(function(){
   $("#player-form").submit(function(event) {
     event.preventDefault();
+    var luckyHarry = new Audio('lucky.mp3');
+    var oneSound = new Audio('one.mp3');
+    var snakeEyes = new Audio('snakeeyes.mp3');
+    luckyHarry.play();
 
     // var nameInput = $("#player-one").val();
     // var newPlayer = new Player(nameInput);
-    var pigSound = new Audio('quiet_pig.mp3');
+
     $("#create-players").hide();
     $(".game-box").show();
     $("button#button-hold").attr("disabled", "disabled");
@@ -93,6 +99,7 @@ $(document).ready(function(){
         $("#score-total").text(playerArray[currentPlayerIndex].playerName + " WINS! Your Score is " + playerArray[currentPlayerIndex].totalScore + "!");
         $(".total-" + currentPlayerIndex).text(playerArray[currentPlayerIndex].totalScore);
       } else if (dieResult[0] === "Z") {
+        snakeEyes.play();
         $("#button-hold").attr("disabled", "disabled");
         $(".player-" + currentPlayerIndex).removeClass("score-current");
         $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled snake eyes, and lost everything! They're back at ZERO.")
@@ -107,7 +114,7 @@ $(document).ready(function(){
         $("#button-hold").attr("disabled", "disabled");
         $(".player-" + currentPlayerIndex).removeClass("score-current");
         $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a 1, and lost their turn!")
-        pigSound.play();
+        oneSound.play();
         if ((playerArray.length - 1) === currentPlayerIndex) {
           currentPlayerIndex = 0;
         } else {
