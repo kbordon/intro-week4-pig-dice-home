@@ -21,11 +21,18 @@
             <form id="player-form">
               <div class="form-group">
                 <label for="player-one">Enter name for player one:</label>
-                <input id="player-one" type="text" class="form-control" required>
+                <input id="player-one" type="text" class="form-control player" required>
               </div>
               <div class="form-group">
                 <label for="player-two">Enter name for player two:</label>
-                <input id="player-two" type="text" class="form-control" required>
+                <input id="player-two" type="text" class="form-control player" required>
+              </div>
+              <div class="form-group">
+                <label for="diceQuantity">How many dice:</label>
+                <select name="diceQuantity">
+                  <option>1</option>
+                  <option>2</option>
+                </select>
               </div>
                 <button type="submit" class="btn btn-info">Submit</button>
               </form>

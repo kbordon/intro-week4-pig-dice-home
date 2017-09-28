@@ -5,7 +5,7 @@ function Player(name) {
   this.turnScore = 0;
 }
 
-Player.protoype.rollDice = function(number) {
+Player.prototype.rollDice = function(number) {
   var diceQuantity = [];
   for (var diceIndex = 0; diceIndex < number; diceIndex++) {
     diceQuantity.push(Math.floor(Math.random() * (6-1 + 1)) + 1);
@@ -76,10 +76,10 @@ $(document).ready(function(){
     $("button#button-hold").attr("disabled", "disabled");
 
     var playerArray = [];
-    $("input").each(function() {
+    $("input.player").each(function() {
       var newPlayer = new Player($(this).val());
       playerArray.push(newPlayer);
-    })
+    });
 
     for (var playersIndex = 0; playersIndex < playerArray.length; playersIndex++) {
       $("#score-keeper").append("<li class='player-" + playersIndex + "'>" + playerArray[playersIndex].playerName + "<br><span class='total-" + playersIndex + "'>" + 0 + "</span></li>");
@@ -120,7 +120,7 @@ $(document).ready(function(){
         }
         $(".player-" + currentPlayerIndex).addClass("score-current");
       } else {
-        $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a " + dieResult.join(" & ") + ". Turn Score: " + playerArray[currentPlayerIndex].turnScore);
+        $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a " + dieResult.join(' & ') + ". Turn Score: " + playerArray[currentPlayerIndex].turnScore);
         if (dieResult[0] === dieResult[1]) {
           $("#button-hold").attr("disabled", "disabled");
           $("#score-total").append("<br>Doubles <em>must</em> roll again!");
