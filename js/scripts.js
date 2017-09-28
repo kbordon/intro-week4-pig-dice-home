@@ -23,10 +23,10 @@ Player.protoype.rollDice = function(number) {
     diceQuantity.forEach(function(rolledNumber){
       this.turnScore += rolledNumber;
     });
-    this.turnScore = this.turnScore + diceQuantity[0];
-    if (diceQuantity[1]) {
-      this.turnScore += diceQuantity[1];
-    }
+    // this.turnScore = this.turnScore + diceQuantity[0];
+    // if (diceQuantity[1]) {
+    //   this.turnScore += diceQuantity[1];
+    // }
     if (this.totalScore + this.turnScore >= 100) {
       this.totalScore = this.totalScore + this.turnScore;
       return "A";
@@ -120,7 +120,7 @@ $(document).ready(function(){
         }
         $(".player-" + currentPlayerIndex).addClass("score-current");
       } else {
-        $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a " + dieResult[0] + " & " + dieResult[1]  + ". Turn Score: " + playerArray[currentPlayerIndex].turnScore);
+        $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a " + dieResult.join(" & ") + ". Turn Score: " + playerArray[currentPlayerIndex].turnScore);
         if (dieResult[0] === dieResult[1]) {
           $("#button-hold").attr("disabled", "disabled");
           $("#score-total").append("<br>Doubles <em>must</em> roll again!");
