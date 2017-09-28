@@ -26,8 +26,6 @@ Player.prototype.rollTwoDice = function() {
   for (var diceNumber = 0; diceNumber < 2; diceNumber++) {
     rollArray.push(Math.floor(Math.random() * (6-1 + 1)) + 1);
   }
-  // var rollResult = Math.floor(Math.random() * (6-1 + 1)) + 1;
-  // var rollResult2 = Math.floor(Math.random() * (6-1 + 1)) + 1;
   if (rollArray[0] === 1 && rollArray[1] === 1) {
     this.turnScore = 0;
     this.totalScore = 0;
@@ -118,6 +116,10 @@ $(document).ready(function(){
         $(".player-" + currentPlayerIndex).addClass("score-current");
       } else {
         $("#score-total").text(playerArray[currentPlayerIndex].playerName + " rolled a " + dieResult[0] + " & " + dieResult[1]  + ". Turn Score: " + playerArray[currentPlayerIndex].turnScore);
+        if (dieResult[0] === dieResult[1]) {
+          $("#button-hold").attr("disabled", "disabled");
+          $("#score-total").append("<br>Doubles <em>must</em> roll again!");
+        }
       }
 
 
